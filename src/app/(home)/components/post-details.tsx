@@ -70,9 +70,9 @@ const PostDetails: React.FC<EditPostProps> = ({ data }) => {
               Created At
             </Label>
             <p className="col-span-3 w-5/6 text-lg border-[1px] p-4 opacity-60">
-              {new Date(data.created_at).toLocaleDateString()}
+              {new Date(data.created_at!).toLocaleDateString()}
               {' - '}
-              {new Date(data.created_at).toLocaleTimeString()}
+              {new Date(data.created_at!).toLocaleTimeString()}
             </p>
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
@@ -90,9 +90,9 @@ const PostDetails: React.FC<EditPostProps> = ({ data }) => {
               Updated At
             </Label>
             <p className="col-span-3 w-5/6 text-lg border-[1px] flex p-4 opacity-60">
-              {new Date(data.updated_at).toLocaleDateString()}
+              {new Date(data.updated_at!).toLocaleDateString()}
               {' - '}
-              {new Date(data.updated_at).toLocaleTimeString()}
+              {new Date(data.updated_at!).toLocaleTimeString()}
             </p>
           </div>
         </div>
