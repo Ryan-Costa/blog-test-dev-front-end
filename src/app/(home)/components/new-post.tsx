@@ -48,11 +48,6 @@ export function NewPost() {
   });
 
   const handleFormSubmit = async (dataForm: NewPostFormProps) => {
-    console.log({
-      ...dataForm,
-      published_at: formatDateISO(dataForm.published_at),
-    });
-
     const dataFormFormatted = {
       ...dataForm,
       published_at: formatDateISO(dataForm.published_at),

@@ -1,4 +1,3 @@
-import api from '@/services/api';
 import { columns } from './columns';
 import { PostsTable } from './posts-table';
 import PostService from '@/services/posts';
@@ -29,8 +28,6 @@ export default async function Home() {
   if (!posts) {
     return null;
   }
-
-  console.log(posts);
 
   return (
     <div className="p-40">

@@ -15,7 +15,7 @@ import PostService from '@/services/posts';
 import { IPost } from '@/types';
 import { PencilIcon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { useState, useTransition } from 'react';
+import { useState } from 'react';
 import { toast } from 'react-toastify';
 
 interface EditPostProps {

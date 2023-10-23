@@ -3,7 +3,7 @@
 import { IPost } from '@/types';
 import { ColumnDef } from '@tanstack/react-table';
 import { Button } from '@/components/ui/button';
-import { ChevronsUpDownIcon, TrashIcon } from 'lucide-react';
+import { ChevronsUpDownIcon } from 'lucide-react';
 import EditPost from './components/edit-post';
 import PostDetails from './components/post-details';
 import DeletePost from './components/delete-post';

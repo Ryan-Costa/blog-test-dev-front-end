@@ -70,9 +70,6 @@ export function PostsTable<PostsPropsID, PostsProps>({
     },
   });
 
-  console.log('table', table.getRowModel().rows);
-  console.log('table', table.getRowModel().rows);
-
   return (
     <div className="w-full">
       <div className="flex items-center py-4 gap-2">
