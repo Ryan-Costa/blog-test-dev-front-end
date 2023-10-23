@@ -6,3 +6,13 @@ export interface IPost {
   created_at?: string;
   updated_at?: string;
 }
+export interface PostsProps {
+  data: {
+    id: number;
+    title: string;
+    slug: string;
+    published_at: string;
+    created_at: string;
+    updated_at: string;
+  }[];
+}

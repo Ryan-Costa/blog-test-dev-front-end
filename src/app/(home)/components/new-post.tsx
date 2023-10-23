@@ -15,6 +15,9 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { formatDateISO } from '@/helper/format-date-iso';
 import PostService from '@/services/posts';
+import { useRouter } from 'next/navigation';
+import { toast } from 'react-toastify';
+import { DialogClose } from '@radix-ui/react-dialog';
 
 const schemaNewPostForm = z.object({
   title: z.string().min(1, 'Enter the user name'),
@@ -27,9 +30,11 @@ const schemaNewPostForm = z.object({
 type NewPostFormProps = z.infer<typeof schemaNewPostForm>;
 
 export function NewPost() {
+  const router = useRouter();
   const {
     handleSubmit,
     register,
+    reset,
     formState: { errors },
   } = useForm<NewPostFormProps>({
     resolver: zodResolver(schemaNewPostForm),
@@ -57,16 +62,25 @@ export function NewPost() {
 
     try {
       await PostService.create(dataFormFormatted);
-      console.log('Post removido com sucesso');
+      router.refresh();
+      toast.success('post added successfully', {
+        autoClose: 3000,
+        theme: 'dark',
+      });
     } catch (error) {
-      console.error('Erro ao remover o post:', error);
+      toast.error('error adding post', {
+        autoClose: 3000,
+        theme: 'dark',
+      });
     }
   };
 
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline">New Post</Button>
+        <Button variant="outline" onClick={() => reset()}>
+          New Post
+        </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[825px]">
         <DialogHeader>
@@ -200,7 +214,9 @@ export function NewPost() {
             </div>
           </div>
           <DialogFooter>
-            <Button type="submit">Create post</Button>
+            <DialogClose asChild>
+              <Button type="submit">Create post</Button>
+            </DialogClose>
           </DialogFooter>
         </form>
       </DialogContent>

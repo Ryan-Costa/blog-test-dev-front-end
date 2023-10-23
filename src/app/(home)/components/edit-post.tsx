@@ -1,6 +1,7 @@
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -13,7 +14,9 @@ import { Label } from '@/components/ui/label';
 import PostService from '@/services/posts';
 import { IPost } from '@/types';
 import { PencilIcon } from 'lucide-react';
-import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { useState, useTransition } from 'react';
+import { toast } from 'react-toastify';
 
 interface EditPostProps {
   data: IPost;
@@ -21,13 +24,21 @@ interface EditPostProps {
 
 const EditPost: React.FC<EditPostProps> = ({ data }) => {
   const [post, setPost] = useState<Partial<IPost>>(data);
+  const router = useRouter();
 
   const handleSaveEditingChanges = async () => {
     try {
-      const response = await PostService.update(String(data.id), post);
-      console.log('Post atualizado com sucesso:', response.data);
+      await PostService.update(data.id, post);
+      toast.success('post updated successfully', {
+        autoClose: 3000,
+        theme: 'dark',
+      });
+      router.refresh();
     } catch (error) {
-      console.error('Erro ao atualizar o post:', error);
+      toast.error('error updating post', {
+        autoClose: 3000,
+        theme: 'dark',
+      });
     }
   };
 
@@ -59,13 +70,15 @@ const EditPost: React.FC<EditPostProps> = ({ data }) => {
           </div>
         </div>
         <DialogFooter>
-          <Button
-            type="submit"
-            className="text-xl"
-            onClick={handleSaveEditingChanges}
-          >
-            Save changes
-          </Button>
+          <DialogClose asChild>
+            <Button
+              type="submit"
+              className="text-xl"
+              onClick={handleSaveEditingChanges}
+            >
+              Save changes
+            </Button>
+          </DialogClose>
         </DialogFooter>
       </DialogContent>
     </Dialog>

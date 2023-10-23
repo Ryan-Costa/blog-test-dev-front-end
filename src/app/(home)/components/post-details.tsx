@@ -8,18 +8,10 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { IPost } from '@/types';
-import {
-  CopyCheckIcon,
-  Edit2Icon,
-  Edit3Icon,
-  EditIcon,
-  FileText,
-  PencilIcon,
-} from 'lucide-react';
-import { useState } from 'react';
+import { CopyCheckIcon, FileText } from 'lucide-react';
+import { toast } from 'react-toastify';
 
 interface EditPostProps {
   data: IPost;
@@ -57,7 +49,16 @@ const PostDetails: React.FC<EditPostProps> = ({ data }) => {
               >
                 Slug
               </Label>
-              <Button variant="outline">
+              <Button
+                variant="outline"
+                onClick={() => {
+                  navigator.clipboard.writeText(data.slug);
+                  toast.success('slug copied!', {
+                    autoClose: 3000,
+                    theme: 'dark',
+                  });
+                }}
+              >
                 <CopyCheckIcon className="h-4 w-4" />
               </Button>
             </div>

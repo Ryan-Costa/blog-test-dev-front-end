@@ -10,7 +10,7 @@ const PostService = {
   create: async (post: Partial<IPost>): Promise<DefaultRequestType<IPost>> =>
     (await api.post('/posts', post)).data,
   update: async (
-    postId: string,
+    postId: number,
     post: Partial<IPost>
   ): Promise<DefaultRequestType<IPost>> =>
     (await api.put(`/posts/${postId}`, post)).data,
