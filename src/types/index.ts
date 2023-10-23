@@ -7,12 +7,25 @@ export interface IPost {
   updated_at?: string;
 }
 export interface PostsProps {
-  data: {
-    id: number;
-    title: string;
-    slug: string;
-    published_at: string;
+  id: number;
+  title: string;
+  slug: string;
+  published_at: string;
+  featured_until: null;
+  youtube_lin: null;
+  primary_text: string;
+  secondary_text: string;
+  seo_title: string;
+  seo_tags: string;
+  seo_description: null;
+  route: {
+    url: string;
+    full_url: string;
     created_at: string;
     updated_at: string;
-  }[];
+  };
+  main_image: null;
+  images: [];
+  created_at: string;
+  updated_at: string;
 }

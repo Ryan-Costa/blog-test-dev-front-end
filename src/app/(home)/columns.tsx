@@ -7,6 +7,7 @@ import { ChevronsUpDownIcon } from 'lucide-react';
 import EditPost from './components/edit-post';
 import PostDetails from './components/post-details';
 import DeletePost from './components/delete-post';
+import PostService from '@/services/posts';
 
 export const columns: ColumnDef<IPost>[] = [
   {
@@ -68,7 +69,7 @@ export const columns: ColumnDef<IPost>[] = [
 
       return (
         <div className="flex items-center justify-center gap-2">
-          <EditPost data={posts} />
+          <EditPost postsId={postsId} />
           <DeletePost postsId={postsId} />
           <PostDetails data={posts} />
         </div>

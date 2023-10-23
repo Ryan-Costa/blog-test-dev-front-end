@@ -14,10 +14,11 @@ import { Label } from '@/components/ui/label';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { formatDateISO } from '@/helper/format-date-iso';
-import PostService from '@/services/posts';
-import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import { DialogClose } from '@radix-ui/react-dialog';
+import { postRevalidate } from '@/functions/postRevalidate';
+import { useState, useTransition } from 'react';
+import ReactLoading from 'react-loading';
 
 const schemaNewPostForm = z.object({
   title: z.string().min(1, 'Enter the user name'),
@@ -30,7 +31,8 @@ const schemaNewPostForm = z.object({
 type NewPostFormProps = z.infer<typeof schemaNewPostForm>;
 
 export function NewPost() {
-  const router = useRouter();
+  const [, startTransition] = useTransition();
+  const [loading, setLoading] = useState(false);
   const {
     handleSubmit,
     register,
@@ -56,11 +58,14 @@ export function NewPost() {
     };
 
     try {
-      await PostService.create(dataFormFormatted);
-      router.refresh();
-      toast.success('post added successfully', {
-        autoClose: 3000,
-        theme: 'dark',
+      setLoading(true);
+      startTransition(async () => {
+        await postRevalidate('/posts', dataFormFormatted);
+        toast.success('post added successfully', {
+          autoClose: 3000,
+          theme: 'dark',
+        });
+        setLoading(false);
       });
     } catch (error) {
       toast.error('error adding post', {
@@ -73,8 +78,21 @@ export function NewPost() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline" onClick={() => reset()}>
-          New Post
+        <Button
+          variant="outline"
+          onClick={() => reset()}
+          disabled={loading && true}
+        >
+          {loading ? (
+            <ReactLoading
+              type={'spin'}
+              color={'#7a7a7a'}
+              height={20}
+              width={20}
+            />
+          ) : (
+            'New Post'
+          )}
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[825px]">
